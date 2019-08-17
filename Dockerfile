@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.60.3
+FROM jenkins/jenkins:latest
 MAINTAINER nescirem <nescirem@gmail.com>
 LABEL description="Docker base image for Fortran CI builds"
 
