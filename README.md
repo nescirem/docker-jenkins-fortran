@@ -40,7 +40,7 @@ docker run -d -p 8080:8080 -p 50000:50000 -v /your/path/jenkins:/var/jenkins_hom
 docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword
 ```
 
-请确保当前宿主机已经联网。如何将其移植到离线环境将会在【[离线环境示例](#离线环境示例)】中进行介绍。选择“安装推荐的插件”[[3](media/jenkins_install_plugins.png)]等待安装完成[[4](media/jenkins_install_plugins_default.png)]后进入实例配置界面[[5](media/jekins_instance configuration.png)]，此处无需修改配置直接保存并完成进入下一步。
+请确保当前宿主机已经联网。如何将其移植到离线环境将会在【[离线环境示例](#离线环境示例)】中进行介绍。选择“安装推荐的插件”[[3](media/jenkins_install_plugins.png)]等待安装完成[[4](media/jenkins_install_plugins_default.png)]后进入实例配置界面[[5](media/jekins_instance_configuration.png)]，此处无需修改配置直接保存并完成进入下一步。
 
 接下来创建管理员账户[[6](media/jenkins_admin_add.png)]，完成后如图[[7](media/jenkins_first_mission.png)]。
 
