@@ -4,10 +4,10 @@ LABEL description="Docker base image for Fortran(with MPICH and CGNS library) CI
 
 USER root
 
-RUN cd ~ && wget -c https://github.com/CGNS/CGNS/archive/v3.2.1.tar.gz
-RUN tar -xzvf v3.2.1.tar.gz && rm -f v3.2.1.tar.gz
-RUN cd CGNS-3.2.1/src && ./configure
-RUN make && make install
+RUN cd ~ && wget -q https://github.com/CGNS/CGNS/archive/v3.2.1.tar.gz  && \
+    tar -xzvf v3.2.1.tar.gz && rm -f v3.2.1.tar.gz && cd ~/CGNS-3.2.1/src && \
+	./configure && \
+	make && make install
 RUN rm -rf ~/CGNS-3.2.1
 
 USER jenkins
