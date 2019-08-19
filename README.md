@@ -6,9 +6,9 @@
 
 | Tags       | Packages                                                     |
 | ---------- | ------------------------------------------------------------ |
-| latest     | build-essential gfortran make python3-pip python3-venv python-dev |
-| mpich      | build-essential gfortran make python3-pip python3-venv python-dev mpich |
-| mpich_cgns | build-essential gfortran make python3-pip python3-venv python-dev mpich libcgns3.3 libcgns-dev |
+| latest     | build-essential gfortran makedepf90 python3-pip python3-venv python-dev |
+| mpich      | build-essential gfortran makedepf90 python3-pip python3-venv python-dev  mpich |
+| mpich_cgns | build-essential gfortran makedepf90 python3-pip python3-venv python-dev  mpich libcgns3.3 libcgns-dev |
 
 
 
@@ -44,19 +44,13 @@ docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword
 
 接下来创建管理员账户[[6](media/jenkins_admin_add.png)]，完成后如图[[7](media/jenkins_first_mission.png)]。
 
-### git
+新建任务"test-fortran"为自由风格的软件项目，添加描述“fortran持续集成测试(SVN)”。源代码管理选择Subversion或者git，配置相应fortran代码库的源地址与认证账户[[8](media/jenkins_svn_config.png)]。
 
+为了偷懒，我们选择构建触发器为轮询SCM并设置为每分钟查询一次相应代码库是否变化[[9](media/jenkins_svn_SCM.png)]。当然，我更推荐使用版本管理的hooks来触发构建，详细设置方式请自行查询相关资料。
 
+在构建中增加构建步骤为“执行 Shell”，在这里输入相应的编译测试指令即可[[10](media/jenkins_svn_buildWithShell.png)]。
 
-### Subversion
-
-新建任务"test-fortran"为自由风格的软件项目，添加描述“fortran持续集成测试(SVN)”。源代码管理选择Subversion，配置相应fortran代码库的源地址与认证账户[[?](media/jenkins_svn_config.png)]。
-
-为了偷懒，我们选择构建触发器为轮询SCM并设置为每分钟查询一次相应代码库是否变化[[?](media/jenkins_svn_SCM.png)]。当然，我更推荐使用SVN的hooks来触发构建，详细设置方式请自行查询相关资料。
-
-在构建中增加构建步骤为“执行 Shell”，在这里输入相应的编译测试指令即可[[?](media/jenkins_svn_buildWithShell.png)]。
-
-在构建后操作中读取构建生成的xml报告[[?](media/jenkins_svn_postBuild.png)]。
+在构建后操作中读取构建生成的xml报告[[11](media/jenkins_svn_postBuild.png)]。
 
 保存后点击立即构建测试是否构建成功。
 
