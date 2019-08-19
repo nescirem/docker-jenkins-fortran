@@ -7,8 +7,8 @@ USER root
 RUN cd ~ && wget -q https://github.com/CGNS/CGNS/archive/v3.2.1.tar.gz  && \
     tar -xzvf v3.2.1.tar.gz && rm -f v3.2.1.tar.gz && cd ~/CGNS-3.2.1/src && \
     ./configure && \
-    make && make install
-RUN rm -rf ~/CGNS-3.2.1
-RUN sed -i 's/^c/!/g' /usr/local/include/cgnslib_f.h
+    make && make install && \
+    rm -rf ~/CGNS-3.2.1 && \
+    sed -i 's/^c/!/g' /usr/local/include/cgnslib_f.h
 
 USER jenkins
