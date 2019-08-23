@@ -10,7 +10,16 @@
 | mpich      | build-essential gfortran make python3-pip python3-venv python-dev mpich |
 | mpich_cgns | build-essential gfortran make python3-pip python3-venv python-dev mpich libcgns3.3 libcgns-dev |
 
+附加软件：
 
+| Name                                                     | Introduction            |
+| -------------------------------------------------------- | ----------------------- |
+| [ford](https://github.com/Fortran-FOSS-Programmers/ford) | Fortran项目文档自动生成 |
+| [FoBiS.py](https://github.com/szaghi/FoBiS)              | Fortran项目构建懒人工具 |
+
+其他分支：mpich_cgns-3.2.1版本基于mpich，但固定使用cgns-3.2.1而非较新的cgns-3.3
+
+> 注意：由于笔者参与的开发项目并不需要hdf5，所以该镜像在安装cgns时并未开启hdf5支持，如有需要请自行修改相关Dockerfile。
 
 ## 链接
 
@@ -28,13 +37,13 @@
 docker pull nescirem/docker-jenkins-fortran:[tag]
 ```
 
-运行该镜像并命名容器为jenkins，这里我们将宿主机的目录与jenkins工作目录做了映射，以方便后续的升级以及移植。你也可以根据自己的喜好将镜像的8080端口映射到宿主机的80端口等默认端口。
+运行该镜像并命名容器为jenkins，这里我们将宿主机的目录与jenkins工作目录做了映射，以方便后续的升级以及移植。你也可以根据自己的喜好将镜像的8080端口映射到宿主机的任意非占用端口。
 
 ```shell
-docker run -d -p 8080:8080 -p 50000:50000 -v /your/path/jenkins:/var/jenkins_home --name jenkins nescirem/docker-jenkins-fortran:[tag]
+docker run -d -p 80:8080 -p 50000:50000 -v /your/path/jenkins:/var/jenkins_home --name jenkins nescirem/docker-jenkins-fortran:[tag]
 ```
 
-打开宿主机的浏览器（如果有的话）访问：`http://127.0.0.1:8080/`，如果宿主机没有浏览器那就用宿主机所在局域网的任意主机访问宿主机相应端口。等待jenkins完成初始化[[1](media/wait_jenkins_service.png)]完成[[2](media/jenkins_input_pwd.png)]，在宿主机上执行以下命令以获取Jenkins管理员密码，你也可以直接访问宿主机映射目录相应文件来获取。
+打开宿主机的浏览器（如果有的话）访问：`http://127.0.0.1/`，如果宿主机没有浏览器那就用宿主机所在局域网的任意主机访问宿主机相应端口。等待jenkins完成初始化[[1](media/wait_jenkins_service.png)]完成[[2](media/jenkins_input_pwd.png)]，在宿主机上执行以下命令以获取Jenkins管理员密码，你也可以直接访问宿主机映射目录相应文件来获取。
 
 ```shell
 docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword
@@ -44,19 +53,13 @@ docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword
 
 接下来创建管理员账户[[6](media/jenkins_admin_add.png)]，完成后如图[[7](media/jenkins_first_mission.png)]。
 
-### git
+新建任务"test-fortran"为自由风格的软件项目，添加描述“fortran持续集成测试(SVN)”。源代码管理选择Subversion或者git，配置相应fortran代码库的源地址与认证账户[[8](media/jenkins_svn_config.png)]。
 
+为了偷懒，我们选择构建触发器为轮询SCM并设置为每分钟查询一次相应代码库是否变化[[9](media/jenkins_svn_SCM.png)]。当然，我更推荐使用版本管理的hooks来触发构建，详细设置方式请自行查询相关资料。
 
+在构建中增加构建步骤为“执行 Shell”，在这里输入相应的编译测试指令即可[[10](media/jenkins_svn_buildWithShell.png)]。
 
-### Subversion
-
-新建任务"test-fortran"为自由风格的软件项目，添加描述“fortran持续集成测试(SVN)”。源代码管理选择Subversion，配置相应fortran代码库的源地址与认证账户[[?](media/jenkins_svn_config.png)]。
-
-为了偷懒，我们选择构建触发器为轮询SCM并设置为每分钟查询一次相应代码库是否变化[[?](media/jenkins_svn_SCM.png)]。当然，我更推荐使用SVN的hooks来触发构建，详细设置方式请自行查询相关资料。
-
-在构建中增加构建步骤为“执行 Shell”，在这里输入相应的编译测试指令即可[[?](media/jenkins_svn_buildWithShell.png)]。
-
-在构建后操作中读取构建生成的xml报告[[?](media/jenkins_svn_postBuild.png)]。
+在构建后操作中读取构建生成的xml报告[[11](media/jenkins_svn_postBuild.png)]。
 
 保存后点击立即构建测试是否构建成功。
 
