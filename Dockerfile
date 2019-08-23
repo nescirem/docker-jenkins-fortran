@@ -4,9 +4,10 @@ LABEL description="Docker base image for Fortran CI builds"
 
 USER root
 
-RUN apt update 
-RUN apt install -y build-essential gfortran make \
+RUN apt update && apt install -y \
+    build-essential gfortran makedepf90 \
     python3-pip python3-venv python-dev && \
-    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+RUN pip3 --no-cache-dir install ford FoBiS.py pygooglechart
 
 USER jenkins

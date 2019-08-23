@@ -4,9 +4,8 @@ LABEL description="Docker base image for Fortran(with MPICH) CI builds"
 
 USER root
 
-RUN apt update 
-RUN apt install -y mpich && \
-    apt-get clean
+RUN apt update && apt install -y mpich && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/lib64/mpich/bin:${PATH}"
 

@@ -6,9 +6,9 @@
 
 | Tags       | Packages                                                     |
 | ---------- | ------------------------------------------------------------ |
-| latest     | build-essential gfortran make python3-pip python3-venv python-dev |
-| mpich      | build-essential gfortran make python3-pip python3-venv python-dev mpich |
-| mpich_cgns | build-essential gfortran make python3-pip python3-venv python-dev mpich libcgns3.3 libcgns-dev |
+| latest     | build-essential gfortran makedepf90 python3-pip python3-venv python-dev |
+| mpich      | build-essential gfortran makedepf90 python3-pip python3-venv python-dev  mpich |
+| mpich_cgns | build-essential gfortran makedepf90 python3-pip python3-venv python-dev  mpich libcgns3.3 libcgns-dev |
 
 附加软件：
 
