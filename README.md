@@ -12,10 +12,11 @@
 
 附加软件：
 
-| Name                                                     | Introduction            |
-| -------------------------------------------------------- | ----------------------- |
-| [ford](https://github.com/Fortran-FOSS-Programmers/ford) | Fortran项目文档自动生成 |
-| [FoBiS.py](https://github.com/szaghi/FoBiS)              | Fortran项目构建懒人工具 |
+| Name                                                     | Introduction                |
+| -------------------------------------------------------- | --------------------------- |
+| [fortdepend](https://github.com/ZedThree/fort_depend.py) | Fortran项目依赖关系生成工具 |
+| [ford](https://github.com/Fortran-FOSS-Programmers/ford) | Fortran项目文档自动生成     |
+| [FoBiS.py](https://github.com/szaghi/FoBiS)              | Fortran项目构建懒人工具     |
 
 其他分支：mpich_cgns-3.2.1版本基于mpich，但固定使用cgns-3.2.1而非较新的cgns-3.3
 
